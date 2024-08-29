@@ -10,6 +10,7 @@ $(function () {
         $(".name").html(config.name);
         $(".sex").html(config.sex);
         $(".age").html(config.age);
+        $(".work_years").html(config.work_years);
         $(".phone").html(config.phone);
         $(".email").html(config.email);
         $(".address").html(config.address);
@@ -18,6 +19,7 @@ $(function () {
         $(".self-intro").html(config.welcome);
         $(".me").html(config.about);
         $(".for-work").html(config.excpect_work);
+        $(".background").html(config.background);
         $(".profile-page .page-header").css("background-image", "url(" + config.url[0] + ")");
         $(".myphoto").attr("src", config.url[1]);
         $(".portfolio-section").css({
@@ -62,29 +64,39 @@ $(function () {
         let row_i = 0;
         if (config.portfolio) {
             for (let i = 0; i < config.portfolio.length; i++) {
-                if (i % 3 == 0) {
-                    $(".portfolio-section-main-container").append("<div class=\"row\"></div>");
-                    row_i++;
-                }
-                let e = $(".portfolio-section-main-container .row").eq(row_i - 1);
-                let img = config.portfolio[i][0];
-                let url = config.portfolio[i][1];
-                let projectName = config.portfolio[i][2];
-                let brief = config.portfolio[i][3];
-                e.append("<div class=\"col-md-4\">\n" +
-                    "    <div class=\"porfolio-image img-raised\" data-aos=\"fade-up\"\n" +
-                    "         data-aos-anchor-placement=\"top-bottom\">\n" +
-                    "        <a href=\"" + url + "\" title=\"点击查看详细信息\">\n" +
-                    "            <figure class=\"portfolio-section-main\">\n" +
-                    "                <img src=\"" + img + "\" alt=\"Image\" />\n" +
-                    "                <figcaption>\n" +
-                    "                    <div class=\"h4\">" + projectName + "</div>\n" +
-                    "                    <p>" + brief + "</p>\n" +
-                    "                </figcaption>\n" +
-                    "            </figure>\n" +
-                    "        </a>\n" +
+                let e = $("#project .portfolio-section-main-container").eq(row_i - 1);
+                // let img = config.portfolio[i][0];
+                let time = config.portfolio[i][1];
+                let projectName = config.portfolio[i][0];
+                let brief = config.portfolio[i][2];
+                let workResponsibilities = Array.isArray(config.portfolio[i][3]) ? config.portfolio[i][3] : [config.portfolio[i][3]];
+
+                let responsibilityList = workResponsibilities.map(responsibility => `<li>${responsibility}</li>`).join('');
+
+                    e.append(
+                    "<div class=\"card\">\n" +
+                    "    <div class=\"row\">\n" +
+                    "        <div class=\"col-md-3 \" data-aos=\"fade-right\" data-aos-offset=\"50\"\n" +
+                    "             data-aos-duration=\"500\">\n" +
+                    "            <div class=\"card-body\">\n" +
+                    "                <p class=\"time\">\n" +
+                    "                    " + time + "\n" +
+                    "                </p>\n" +
+                    "                <strong class=\"work\">" + projectName + "</strong>\n" +
+                    "            </div>\n" +
+                    "        </div>\n" +
+                    "        <div class=\"col-md-9\" data-aos=\"fade-left\" data-aos-offset=\"50\" data-aos-duration=\"500\">\n" +
+                    "            <div class=\"card-body\">\n" +
+                    "                <p>" + brief + "</p>\n" + // 项目描述内容\n" +
+                    "                <h5>工作职责:</h5>\n" + // 工作职责标题\n" +
+                    "                   <ul>\n" + // 开始工作职责列表\n" +
+                        responsibilityList +
+                    "                </ul>\n" +
+                    "            </div>\n" +
+                    "        </div>\n" +
                     "    </div>\n" +
-                    "</div>");
+                    "</div>"
+                );
             }
         }
 
@@ -123,7 +135,7 @@ $(function () {
         if (config.others) {
             for (let i = 0; i < config.others.length; i++) {
                 var e;
-                if (i % 2 == 0) {
+                if (i % 2 === 0) {
                     e = $(".timeline-left .timeul");
                 } else {
                     e = $(".timeline-right .timeul");
@@ -148,13 +160,8 @@ $(function () {
         if (config.icon) {
             for (let i = 0; i < config.icon.length; i++) {
                 let img = config.icon[i][0];
-                let url = config.icon[i][1];
-                let desc = config.icon[i][2];
                 $(".icon-insert").append(
-                    "<a class=\"my-tooltip\" href=\"" + url + "\" title=\"访问我的社交平台\">\n" +
-                    "    <img src=\"" + img + "\" alt=\"\">\n" +
-                    "    <span class=\"my-tooltiptext\">" + desc + "</span>\n" +
-                    "</a>"
+
                 );
             }
         }
@@ -197,23 +204,6 @@ $(function () {
             $(this).prev().find("span").html(data + "%");
         });
     }
-
-    $(".send-btn").on("click", mailsend);
-
-    function mailsend() {
-        var subject = $(".subject").val();
-        var content = $(".message").val();
-        content = content.replace(new RegExp(' ', 'g'), '%20');
-
-        content = content.replace(new RegExp('\n', 'g'), '%0d%0a');
-
-        // if (confirm("你确定要向" + who + "放送邮件吗?") == true) {
-        //     location="mailto:sample@fly63.com?subject=test&cc=sample@hotmail.com&subject=主题&body=内容";
-        // }
-        location = "mailto:" + config.email + "?subject=" + subject + "&body=" + content;
-    }
-
-
 
 
     // ---- 座右铭字缓出效果 -----
@@ -258,7 +248,6 @@ $(function () {
     }
 
     // ----- END ------
-
 
 
     //--- 绑定按钮特效和文字淡入淡出 ---
