@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="./CSS/personal-info-animate.css">
     <link rel="stylesheet" href="./CSS/animate.min.css">
     <link href="./CSS/aos.css" rel="stylesheet">
-
     <title>关于我</title>
 
 </head>
@@ -40,6 +39,7 @@
                             <li class="nav-item"><a class="nav-link" href="#project">项目经验</a></li>
                             <li class="nav-item"><a class="nav-link" href="#others">其他经历</a></li>
                             <li class="nav-item"><a class="nav-link" href="#contact">联系方式</a></li>
+                            <li class="nav-item"><a class="nav-link"  href="javascript:void(0);" onclick="downloadResume()">简历下载</a></li>
                         </ul>
                     </div>
                 </div>
@@ -62,8 +62,9 @@
                     <div class="left-content">
                         <div class="row-no-use" style="height: 40px;"></div>
                         <div class="personalImage">
-                            <a href="javascript:void(0)">
-                                <img class="myphoto" src="" alt="个人图片">
+
+                            <a href="javascript:void(0)" >
+                                <img class="myphoto" src="" alt="个人图片" onclick="downloadResume()">
                             </a>
                         </div>
 
@@ -241,6 +242,20 @@
 <script src="./JS/personal-info-main.js"></script>
 <script>
     AOS.init();
+    function downloadResume(fileUrl) {
+        // 创建一个临时的a标签
+        const tempLink = document.createElement('a');
+        tempLink.href = "images/纪舒_简历.pdf"; // 设置文件的URL
+        tempLink.setAttribute('download', '纪舒_简历.pdf'); // 设置下载的文件名（你可以根据需要修改）
+        // 隐藏a标签（虽然在这个场景下它立即被点击并移除了，但隐藏它是个好习惯）
+        tempLink.style.display = 'none';
+        // 将a标签添加到文档中
+        document.body.appendChild(tempLink);
+        // 触发点击事件
+        tempLink.click();
+        // 移除a标签
+        document.body.removeChild(tempLink);
+    }
 </script>
 
 
