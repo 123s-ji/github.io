@@ -2,8 +2,8 @@ var config = {
     /*在这里配置你的基本信息，所有数据以字符串形式给出*/
     name: "纪舒",
     sex: "男",
-    age: "28",
-    work_years:"5年",
+    age: "29",
+    work_years:"6年",
     phone: "17771847943",
     email: "940427808@qq.com",
     address: "现居湖北省武汉市",
